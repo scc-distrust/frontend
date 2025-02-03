@@ -1,18 +1,5 @@
-<script lang="ts">
-  import SecondButton from "./components/SecondButton.svelte";
-
-  let number = 1;
-
-  function incrementNumber() {
-    number++;
-  }
+<script>
+  import Waiting from "./pages/Waiting.svelte";
 </script>
 
-<button on:click={incrementNumber}>Click Me: {number}</button>
-<SecondButton />
-
-<style>
-  button {
-    padding: 1rem;
-  }
-</style>
+<Waiting />

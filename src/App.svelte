@@ -1,5 +1,5 @@
 <script>
-  import Waiting from "./pages/Login.svelte";
+  import Waiting from "./pages/Waiting.svelte";
 </script>
 
 <Waiting />

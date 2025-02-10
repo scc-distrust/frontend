@@ -9,6 +9,7 @@
     font-family: "Henny Penny", serif;
     font-size: var(--size);
     text-align: center;
+    margin: 0;
     margin-top: 5%;
   }
 </style>

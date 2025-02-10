@@ -18,7 +18,7 @@
     background-color: #fff;
     color: #fff;
     padding: 0.75rem 1rem;
-    margin: 0.5rem 3rem;
+    margin: 0.5rem 0;
     border-radius: 4px;
     transition: all 0.2s ease-in-out;
     font-family: "Ubuntu Mono", serif;

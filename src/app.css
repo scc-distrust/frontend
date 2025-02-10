@@ -1,8 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Henny+Penny&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Bungee&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Inria+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Inria+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap");
 
 :root {
   --background: #0b0e2f;
@@ -12,6 +11,17 @@
   --red: #ee3d64;
   --gray: #f1f1f1;
   --cyan: #1993ff;
+  --font-color: #000000;
+
+  --card-purple-border: rgba(166, 40, 242, 0.69);
+  --card-red-border: rgba(238, 61, 100, 0.59);
+  --card-blue-border: rgba(34, 96, 255, 0.59);
+  --card-yellow-border: rgba(239, 198, 42, 0.59);
+
+  --card-purple-bg: rgb(244, 224, 255);
+  --card-red-bg: rgb(255, 218, 226);
+  --card-blue-bg: rgb(208, 221, 255);
+  --card-yellow-bg: rgb(255, 248, 220);
 }
 
 html,

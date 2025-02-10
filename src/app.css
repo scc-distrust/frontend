@@ -13,15 +13,15 @@
   --cyan: #1993ff;
   --font-color: #000000;
 
-  --card-purple-border: rgba(166, 40, 242, 0.69);
-  --card-red-border: rgba(238, 61, 100, 0.59);
-  --card-blue-border: rgba(34, 96, 255, 0.59);
-  --card-yellow-border: rgba(239, 198, 42, 0.59);
+  --purple-border: rgba(166, 40, 242, 0.69);
+  --red-border: rgba(238, 61, 100, 0.59);
+  --blue-border: rgba(34, 96, 255, 0.59);
+  --yellow-border: rgba(239, 198, 42, 0.59);
 
-  --card-purple-bg: rgb(244, 224, 255);
-  --card-red-bg: rgb(255, 218, 226);
-  --card-blue-bg: rgb(208, 221, 255);
-  --card-yellow-bg: rgb(255, 248, 220);
+  --purple-bg: rgb(244, 224, 255);
+  --red-bg: rgb(255, 218, 226);
+  --blue-bg: rgb(208, 221, 255);
+  --yellow-bg: rgb(255, 248, 220);
 }
 
 html,

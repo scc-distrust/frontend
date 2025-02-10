@@ -1,14 +1,15 @@
 <script lang="ts">
+  import type { Color } from "../lib/user";
+
   export let username: string = "Username";
   export let image: string =
     "https://cdn.vectorstock.com/i/preview-2x/31/01/pixel-art-character-vector-28943101.webp";
-  export let borderColor: string = "var(--card-purple-border)";
-  export let backgroundColor: string = "var(--card-purple-bg)";
+  export let color: Color;
 </script>
 
 <div
   class="user-card"
-  style="border-left-color: {borderColor}; background-color: {backgroundColor};"
+  style="border-left-color: var(--{color}-border); background-color: var(--{color}-bg);"
 >
   {#if image}
     <img src={image} alt={username} class="character-image" />

@@ -1,9 +1,10 @@
 <script lang="ts">
   export let size: string = "1em";
+  export let subtitle: string = "Subtitle";
 </script>
 
 <div class="subtitle">
-  <h1 style="--size: {size}">Waiting Room</h1>
+  <h1 style="--size: {size}">{subtitle}</h1>
 </div>
 
 <style>

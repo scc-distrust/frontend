@@ -8,7 +8,7 @@
 
 <div class="main-content">
   <Title size="3rem" />
-  <Subtitle size="1.76rem" />
+  <Subtitle size="1.76rem" subtitle="Waiting room" />
   <div class="user-list">
     <UserCard username="Devanshu" color="blue" />
     <UserCard username="Santio" color="red" />

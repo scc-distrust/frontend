@@ -4,6 +4,7 @@
   import Subtitle from "../components/Subtitle.svelte";
   import Button from "../components/Button.svelte";
   import Task from "../components/Task.svelte";
+  import ReportCard from "../components/ReportCard.svelte";
 </script>
 
 <div class="main-content">
@@ -15,7 +16,9 @@
     <Task size="1.6rem" task="Fix Wiring" />
   </div>
   <Subtitle size="1.76rem" subtitle="Bodies Nearby" />
-  <div class="nearby-list"></div>
+  <div class="nearby-list">
+    <ReportCard reportname="Devanshu" color="purple" />
+  </div>
   <div class="button-container">
     <Button text="Call Meeting" type="danger" />
     <Button text="Start to play" type="primary" />

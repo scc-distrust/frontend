@@ -18,7 +18,7 @@
   .task {
     margin-left: 12%;
     position: relative;
-    margin-bottom: -0.5rem;
+    margin-bottom: -0.9rem;
   }
 
   .task::before {

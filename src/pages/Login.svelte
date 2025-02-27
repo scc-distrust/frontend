@@ -1,15 +1,24 @@
 <script lang="ts">
   import Button from "../components/Button.svelte";
+  import HowToPlay from "../components/HowToPlay.svelte";
   import Icon from "../components/Icon.svelte";
   import Input from "../components/Input.svelte";
   import Title from "../components/Title.svelte";
   import UserProfile from "../components/UserProfile.svelte";
+
+  let howToPlay: boolean = false;
+
+  const showHowToPlay = () => {
+    howToPlay = true;
+  };
+
+  const login = () => {};
 </script>
 
 <div class="main-container">
   <Title size="6rem" />
   <UserProfile editable={true} />
-  <form class="login-form">
+  <form class="login-form" on:submit|preventDefault={login}>
     <Input id="username">
       <Icon icon="user-circle" size={1.4} />
       Username
@@ -21,9 +30,13 @@
 
     <div class="button-container">
       <Button text="Connect" type="primary" />
-      <Button text="How to play" type="default" />
+      <Button text="How to play" type="default" on:click={showHowToPlay} />
     </div>
   </form>
+
+  {#if howToPlay}
+    <HowToPlay />
+  {/if}
 </div>
 
 <style>

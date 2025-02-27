@@ -1,9 +1,13 @@
 <script>
-  import Title from "../components/Title.svelte";
-  import Subtitle from "../components/Subtitle.svelte";
+  import Title from "./Title.svelte";
+  import Subtitle from "./Subtitle.svelte";
 </script>
 
 <div class="main-content">
+  <div class="holder">
+    <hr />
+  </div>
+
   <!-- <Title size="3rem" /> -->
   <Subtitle size="1.76rem" subtitle="How to play" />
   <div class="instruction">
@@ -30,6 +34,7 @@
 
 <style>
   .instruction {
+    /* background-color: var(--background-100); */
     font-family: "Ubuntu Mono", serif;
     font-size: 1.2rem;
     margin-left: 5%;
@@ -37,10 +42,23 @@
     text-align: left;
     text-indent: 2rem;
   }
-  /* .main-content {
-    background-color: var(--background-instruction);
+  .main-content {
+    background-color: var(--background-100);
     width: 100%;
     margin: 0;
     padding: 0;
-  } */
+    position: absolute;
+    bottom: 0;
+    z-index: 100;
+  }
+
+  .holder {
+    width: 30%;
+    margin: 0 auto;
+  }
+
+  hr {
+    border: 2px solid #fff;
+    border-radius: 10px;
+  }
 </style>

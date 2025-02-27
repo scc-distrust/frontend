@@ -7,6 +7,7 @@
 </script>
 
 <button
+  on:click
   class={type}
   style="width: {fullWidth ? '-webkit-fill-available' : 'auto'}">{text}</button
 >

@@ -14,6 +14,7 @@
 
 <style>
   button {
+    min-width: 8rem;
     outline: none;
     border: none;
     background-color: #fff;

@@ -1,5 +1,7 @@
 <script lang="ts">
   import type { Color } from "../lib/user";
+  import Button from "./Button.svelte";
+  import Icon from "./Icon.svelte";
 
   export let reportname: string = "Report Name";
   export let status: string = "Dead Player!";
@@ -14,12 +16,12 @@
 >
   <div class="report-info">
     <div class="name-container">
-      <span class="icon">💀</span>
+      <Icon icon="skull" size={2} />
       <p class="username">{reportname}</p>
     </div>
     <p class="status">{status}</p>
   </div>
-  <button class="report-btn">Report</button>
+  <Button text="Report" type="danger" fullWidth={false} />
 </div>
 
 <style>
@@ -43,12 +45,8 @@
     align-items: flex-start;
   }
 
-  .icon {
-    font-size: 1.5rem;
-  }
-
   .username {
-    font-size: 1.4rem;
+    font-size: 1.8rem;
     font-weight: bold;
     margin: 0%;
     color: var(--font-color);
@@ -57,27 +55,12 @@
   .name-container {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 4px;
   }
 
   .status {
     font-size: 1.5rem;
     color: var(--font-color);
     margin: 0%;
-  }
-
-  .report-btn {
-    background-color: var(--red);
-    color: var(--white);
-    border: none;
-    font-family: "Ubuntu Mono", serif;
-    padding: 10px 36px;
-    font-size: 1.2rem;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-
-  .report-btn:hover {
-    background-color: var(--grey);
   }
 </style>

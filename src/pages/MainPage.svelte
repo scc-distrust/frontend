@@ -6,7 +6,7 @@
   import Task from "../components/Task.svelte";
   import ReportCard from "../components/ReportCard.svelte";
 
-  let imposter: boolean = false;
+  let imposter: boolean = true;
 </script>
 
 <div class="main-content">

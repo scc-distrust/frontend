@@ -1,1 +1,1 @@
-export type Role = "worker" | "traitor" | "dead";
+export type Role = "worker" | "traitor" | "eliminated";

@@ -1,19 +1,20 @@
 <script lang="ts">
   import type { Role } from "../lib/game";
 
-  export let role: Role ;
+  export let role: Role;
   export let numOfTraitor: number = 0;
-
-  $: info =
-    role === "dead"
-      ? "You may continue your tasks after a meeting is called."
-      : `There are <span class="traitor-count">${numOfTraitor}</span> traitors.`;
 </script>
 
 <div>
   <p>You are a</p>
   <p class="role {role}">{role}</p>
-  <p class="info">{@html info}</p>
+  {#if role === "eliminated"}
+    <p class="info">You may continue your tasks after a meeting is called.</p>
+  {:else}
+    <p class="info">
+      There are <span class="traitor-count">{numOfTraitor}</span> traitors.
+    </p>
+  {/if}
 </div>
 
 <style>

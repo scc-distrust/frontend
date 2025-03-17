@@ -10,10 +10,10 @@
   <Title size="3rem" />
   <Subtitle size="1.76rem" subtitle="Waiting room" />
   <div class="user-list">
-    <UserCard username="Devanshu" color="blue" type="" />
-    <UserCard username="Santio" color="red" type=""/>
-    <UserCard username="Dave" color="yellow" type=""/>
-    <UserCard username="Dave" color="purple" type=""/>
+    <UserCard username="Devanshu" color="blue" />
+    <UserCard username="Santio" color="red" />
+    <UserCard username="Dave" color="yellow" />
+    <UserCard username="Dave" color="purple" />
   </div>
   <div class="button-container">
     <Button text="Start to play" type="primary" />

@@ -40,7 +40,7 @@
   }
 
   img {
-    width: 128px;
+    width: 120px;
     height: 128px;
     display: block;
     margin-left: auto;

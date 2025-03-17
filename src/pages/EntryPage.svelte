@@ -4,8 +4,8 @@
 </script>
 
 <div class="main-container">
-  <Title size="3rem" />
-  <Role role="worker" />
+    <Title size="3rem" />
+    <Role role="traitor" />
 </div>
 
 <style>

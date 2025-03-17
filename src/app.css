@@ -12,6 +12,7 @@
   --red: #ee3d64;
   --gray: #dfdfdf;
   --cyan: #1993ff;
+  --green: #4caf50;
   --font-color: #000000;
 
   --purple-border: rgba(166, 40, 242, 0.69);
@@ -23,6 +24,7 @@
   --red-bg: rgb(255, 218, 226);
   --blue-bg: rgb(208, 221, 255);
   --yellow-bg: rgb(255, 248, 220);
+  --green-bg: rgb(204, 255, 204);
 }
 
 html,

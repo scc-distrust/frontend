@@ -1,5 +1,5 @@
 <script>
-  import Login from "./pages/MeetingRoom.svelte";
+  import Login from "./pages/MeetingConclusion.svelte";
 </script>
 
 <Login />

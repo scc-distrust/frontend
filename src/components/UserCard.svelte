@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { createEventDispatcher } from "svelte";
   import { cardClicked } from "../store/ui";
   import type { Color } from "../lib/user";
 
@@ -12,6 +13,7 @@
   export let voted: boolean = false;
 
   let clicked: boolean = false;
+  const dispatch = createEventDispatcher();
 
   // Function to handle voting
   function handleVote(isRight: boolean) {

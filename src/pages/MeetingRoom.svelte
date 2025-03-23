@@ -17,10 +17,10 @@
     <UserCard username="Dave" color="purple" voted={true} />
   </div>
   <div class="timmer">
-    <div class="time-left" >
-    {timer}s
+    <div class="time-left">
+      {timer}s
     </div>
-    <p>left for voting</p>
+    <p class="time-message">left for voting!</p>
   </div>
   <div class="button-container">
     <Button text="Skip Vote" type="default" />
@@ -35,5 +35,28 @@
     padding-right: 5%;
     margin-bottom: 0.5rem;
     bottom: 10px;
+  }
+
+  .timmer {
+    position: absolute;
+    font-family: "Ubuntu Mono", serif;
+    width: 100%;
+    text-align: center;
+    font-size: 1.5rem;
+    bottom: 95px;
+    margin: 0;
+  }
+
+  .time-left {
+    font-family: "Ubuntu Mono", serif;
+    font-weight: 600;
+    color: var(--green);
+    margin: 0;
+    font-size: 3.4rem;
+  }
+
+  .time-message {
+    margin: 0;
+    font-weight: lighter;
   }
 </style>

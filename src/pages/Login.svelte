@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { onMount } from "svelte";
   import Button from "../components/Button.svelte";
   import HowToPlay from "../components/HowToPlay.svelte";
   import Icon from "../components/Icon.svelte";
@@ -7,10 +8,17 @@
   import UserProfile from "../components/UserProfile.svelte";
 
   let howToPlay: boolean = false;
+  // let timer = 120;
 
   const showHowToPlay = () => {
     howToPlay = true;
   };
+
+  // onMount(() => {
+  //   setInterval(() => {
+  //     timer -= 1;
+  //   }, 1000);
+  // });
 
   const login = () => {};
 </script>

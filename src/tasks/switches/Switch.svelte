@@ -18,20 +18,11 @@
     expected = Math.abs((1 - Math.round(y / 100)) * maxY - 20);
 
     drag
-      .mount(squareElement, (_, y) => {
-        console.log(
-          Math.max(
-            Math.min(y - switchElement.offsetTop, switchElement.clientHeight),
-            0
-          )
-        );
-
-        pixels = Math.max(
-          Math.min(y - switchElement.offsetTop, switchElement.clientHeight),
-          0
-        );
+      .mount(squareElement, (event) => {
+        pixels = event.mouse.y;
       })
-      .addConstraint(switchElement);
+      .addConstraint(switchElement)
+      .offsetElement(switchElement);
   });
 </script>
 
@@ -60,10 +51,12 @@
 
   .square {
     background-color: var(--color);
+    z-index: 20;
   }
 
   .expected {
     border: 2px dashed var(--color);
     opacity: 0.5;
+    z-index: 10;
   }
 </style>

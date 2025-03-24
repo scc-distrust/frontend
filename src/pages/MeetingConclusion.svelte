@@ -46,6 +46,6 @@
   }
 
   .traitor-count {
-    color:var(--red);
+    color: var(--red);
   }
 </style>

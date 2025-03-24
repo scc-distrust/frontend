@@ -1,0 +1,12 @@
+{
+	"appId": "com.github.distrust",
+	"appName": "Distrust",
+	"webDir": "dist",
+	"plugins": {},
+	"packageClassList": [
+		"CapacitorBarcodeScannerPlugin",
+		"CAPCameraPlugin",
+		"GeolocationPlugin",
+		"SplashScreenPlugin"
+	]
+}

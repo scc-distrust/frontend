@@ -2,9 +2,11 @@
   import Title from "../components/Title.svelte";
   import Icon from "../components/Icon.svelte";
 
-  import trophy from "../assets/imgs/trophy.png";
-
-  export let message: string = "VICTORY!";
+  export let message: string = "YOU LOST!";
+  export let traitors = [
+    { name: "Santio", image: "hello" },
+    { name: "Darren", image: "helloq" },
+  ];
 </script>
 
 <Title size="3rem" />
@@ -22,9 +24,19 @@
       <Icon icon="caret-right-filled" size={3} />
     </div>
   </div>
-  <div class="trophy">
-    <div class="shine"></div>
-    <img class="trophy-icon" src={trophy} alt="Trophy icon" />
+  <div class="traitor-title">TRAITORS</div>
+  <div class="traitors">
+    {#each traitors as traitor}
+      <div class="traitor-card">
+        <img
+          aria-hidden="true"
+          src="https://api.dicebear.com/9.x/pixel-art/svg?seed={traitor.image}"
+          alt="Traitor profile picture"
+          class="traitor-image"
+        />
+        <p class="traitor-name">{traitor.name}</p>
+      </div>
+    {/each}
   </div>
 </div>
 
@@ -41,7 +53,7 @@
 
   .title {
     position: relative;
-    height: 2rem;
+    height: 1.5rem;
   }
 
   .message,
@@ -51,20 +63,21 @@
     left: 0;
     transform: translate(-50%, -50%);
     font-family: "Bungee", serif;
-    font-size: 4rem;
+    font-size: 3rem;
     font-weight: normal;
+    width: 17rem;
   }
 
   .message {
     z-index: 20;
-    color: var(--yellow);
+    color: var(--red);
   }
 
   .drop-shadow {
     z-index: 10;
     margin: 0.2rem -0.25rem;
     color: transparent;
-    -webkit-text-stroke: 1px var(--yellow);
+    -webkit-text-stroke: 1px var(--red);
   }
 
   .arrow-line {
@@ -90,34 +103,36 @@
     background-color: white;
   }
 
-  .trophy {
-    position: relative;
+  .traitor-title {
+    font-family: "Bungee", serif;
+    font-size: 1.6rem;
+    color: var(--red);
+    margin-top: 20px;
   }
 
-  .shine,
-  .trophy-icon {
-    margin-top: 4rem;
-    position: absolute;
-    top: 0;
-    left: 0;
-    transform: translate(-50%, -50%);
+  .traitors {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 10px;
   }
 
-  .shine {
-    z-index: 10;
-    height: 15rem;
-    width: 15rem;
-    background: transparent;
-    background: radial-gradient(
-      circle,
-      rgba(255, 255, 255, 0.4) 0%,
-      rgba(0, 0, 0, 0) 60%
-    );
+  .traitor-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
   }
 
-  .trophy-icon {
-    z-index: 20;
-    width: 160px;
-    height: 160px;
+  .traitor-image {
+    width: 100px;
+    height: 100px;
+  }
+
+  .traitor-name {
+    font-family: "Bungee", serif;
+    font-size: 1rem;
+    margin-top: 8px;
+    color: var(--text-color);
   }
 </style>

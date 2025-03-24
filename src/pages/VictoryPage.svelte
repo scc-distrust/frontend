@@ -15,11 +15,11 @@
   </div>
   <div class="arrow-line">
     <div class="arrow-left">
-      <Icon icon="arrow-left" size={2.5} />
+      <Icon icon="caret-left-filled" size={3} />
     </div>
     <div class="line"></div>
     <div class="arrow-right">
-      <Icon icon="arrow-right" size={2.5} />
+      <Icon icon="caret-right-filled" size={3} />
     </div>
   </div>
   <div class="trophy">
@@ -70,22 +70,23 @@
   .arrow-line {
     display: flex;
     align-items: center;
-    margin: 20px 0;
-    width: 90%;
+    margin-top: -8px;
+    margin-bottom: 20px;
+    width: 100%;
   }
 
   .arrow-left {
-    transform: translateX(75%);
+    transform: translateX(60%);
   }
 
   .arrow-right {
-    transform: translateX(-75%);
+    transform: translateX(-60%);
   }
 
   .line {
     margin: 0 auto;
-    width: 80%;
-    height: 3px;
+    width: 95%;
+    height: 6px;
     background-color: white;
   }
 
@@ -104,19 +105,19 @@
 
   .shine {
     z-index: 10;
-    height: 15rem;
-    width: 15rem;
+    height: 20rem;
+    width: 20rem;
     background: transparent;
     background: radial-gradient(
       circle,
       rgba(255, 255, 255, 0.4) 0%,
-      rgba(0, 0, 0, 0) 50%
+      rgba(0, 0, 0, 0) 60%
     );
   }
 
   .trophy-icon {
     z-index: 20;
-    width: 256px;
-    height: 256px;
+    width: 160px;
+    height: 160px;
   }
 </style>

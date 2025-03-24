@@ -4,7 +4,7 @@
 
   import trophy from "../assets/imgs/trophy.png";
 
-  export let message: string = "VICTORY";
+  export let message: string = "VICTORY!";
 </script>
 
 <Title size="3rem" />
@@ -105,8 +105,8 @@
 
   .shine {
     z-index: 10;
-    height: 20rem;
-    width: 20rem;
+    height: 15rem;
+    width: 15rem;
     background: transparent;
     background: radial-gradient(
       circle,

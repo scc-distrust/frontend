@@ -1,14 +1,23 @@
 <script lang="ts">
-	import Title from '../../components/Title.svelte';
+	import { createEventDispatcher } from 'svelte';
 	import Switch from './Switch.svelte';
-	import Button from '../../components/Button.svelte';
+
+	const dispatcher = createEventDispatcher<{ completed: never }>();
+	let completedSwitches: number = 0;
+
+	const inc = () => {
+		completedSwitches++;
+		if (completedSwitches === 4) {
+			dispatcher('completed', null as never);
+		}
+	};
 </script>
 
 <div>
-	<Switch color="red" />
-	<Switch color="green" />
-	<Switch color="blue" />
-	<Switch color="purple" />
+	<Switch color="red" on:completed={inc} />
+	<Switch color="green" on:completed={inc} />
+	<Switch color="blue" on:completed={inc} />
+	<Switch color="purple" on:completed={inc} />
 </div>
 
 <style>

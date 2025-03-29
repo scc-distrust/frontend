@@ -4,5 +4,5 @@
 </script>
 
 <TaskPage>
-	<Switches />
+	<Switches on:completed={() => console.log('yay done')} />
 </TaskPage>

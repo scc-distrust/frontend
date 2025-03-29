@@ -5,6 +5,16 @@ class DraggableElement {
     private baseOffset: number[] = [0, 0];
     private isDragging: boolean = false;
     private constraints: Constraint[] = [];
+    private events: RegisteredListener<any>[] = [];
+
+    private register<K extends keyof HTMLElementEventMap>(
+        element: Node,
+        event: K,
+        handler: (event: HTMLElementEventMap[K]) => void
+    ) {
+        element.addEventListener(event, handler as any);
+        this.events.push({ element, event, handler });
+    }
 
     constructor(
         element: HTMLElement,
@@ -26,8 +36,6 @@ class DraggableElement {
                 const maxRight = maxLeft + rect.width - (constraint.padding * 2);
                 const maxBottom = maxTop + rect.height - (constraint.padding * 2);
 
-                console.log(maxLeft, maxTop, maxRight, maxBottom);
-
                 elementX = Math.max(Math.min(elementX, maxRight), maxLeft);
                 elementY = Math.max(Math.min(elementY, maxBottom), maxTop);
             }
@@ -47,21 +55,20 @@ class DraggableElement {
             });
         };
 
-        element.addEventListener('mousedown', (event: MouseEvent) => {
+        this.register(element, 'mousedown', (_) => {
             this.isDragging = true;
             document.addEventListener('mousemove', this.event);
-        })
+        });
 
-        document.addEventListener('mouseup', () => {
+        this.register(element, 'mouseup', () => {
             if (!this.isDragging) return;
             document.removeEventListener('mousemove', this.event);
-        })
+        });
 
-        document.addEventListener('selectstart', (event: Event) => {
-            if (this.isDragging) {
-                event.preventDefault();
-            }
-        })
+        this.register(document, 'selectstart', (event: Event) => {
+            if (!this.isDragging) return;
+            event.preventDefault();
+        });
     }
 
     addConstraint(element: Constraint): DraggableElement {
@@ -77,6 +84,17 @@ class DraggableElement {
     offsetElement(element: HTMLElement): DraggableElement {
         const rect = element.getBoundingClientRect();
         this.baseOffset = [rect.left, rect.top];
+        return this;
+    }
+
+    cancel(): DraggableElement {
+        this.isDragging = false;
+
+        document.removeEventListener('mousemove', this.event);
+        for (const event of this.events) {
+            event.element.removeEventListener(event.event, event.handler);
+        }
+
         return this;
     }
 
@@ -100,4 +118,10 @@ export interface DragEvent {
 interface Constraint {
     element: HTMLElement;
     padding: number;
+}
+
+interface RegisteredListener<K extends keyof HTMLElementEventMap> {
+    element: Node;
+    event: K,
+    handler: (event: HTMLElementEventMap[K]) => void;
 }

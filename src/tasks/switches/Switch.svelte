@@ -1,8 +1,9 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { createEventDispatcher, onMount } from 'svelte';
 	import * as drag from '../../lib/drag';
 
 	export let color: string;
+	export const dispatcher = createEventDispatcher<{ completed: never }>();
 
 	let switchElement: HTMLDivElement;
 	let squareElement: HTMLDivElement;
@@ -15,11 +16,17 @@
 		y = Math.random() * 100 + 1;
 		const maxY = switchElement.clientHeight - squareElement.clientHeight - 40;
 		pixels = (y / 100) * maxY;
-		expected = Math.abs((1 - Math.round(y / 100)) * (maxY + 26) - 19);
+		expected = Math.abs((1 - Math.round(y / 100)) * (maxY + 25) - 19);
 
-		drag
+		const draggable = drag
 			.mount(squareElement, (event) => {
 				pixels = event.element.y;
+				if (Math.abs(pixels - expected) < 20) {
+					dispatcher('completed', null as never);
+					draggable.cancel();
+					pixels = expected;
+					return;
+				}
 			})
 			.addConstraint({ element: switchElement, padding: 50 })
 			.offsetElement(switchElement);

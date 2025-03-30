@@ -3,7 +3,7 @@
 	import * as drag from '../../lib/drag';
 
 	export let color: string;
-	export const dispatcher = createEventDispatcher<{ completed: never }>();
+	export const dispatcher = createEventDispatcher<{ completed: void }>();
 
 	let switchElement: HTMLDivElement;
 	let squareElement: HTMLDivElement;
@@ -22,7 +22,7 @@
 			.mount(squareElement, (event) => {
 				pixels = event.element.y;
 				if (Math.abs(pixels - expected) < 20) {
-					dispatcher('completed', null as never);
+					dispatcher('completed');
 					draggable.cancel();
 					pixels = expected;
 					return;

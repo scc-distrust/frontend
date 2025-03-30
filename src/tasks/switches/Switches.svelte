@@ -2,13 +2,13 @@
 	import { createEventDispatcher } from 'svelte';
 	import Switch from './Switch.svelte';
 
-	const dispatcher = createEventDispatcher<{ completed: never }>();
+	const dispatcher = createEventDispatcher<{ completed: void }>();
 	let completedSwitches: number = 0;
 
 	const inc = () => {
 		completedSwitches++;
 		if (completedSwitches === 4) {
-			dispatcher('completed', null as never);
+			dispatcher('completed');
 		}
 	};
 </script>

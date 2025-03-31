@@ -5,7 +5,6 @@
 	"plugins": {},
 	"packageClassList": [
 		"CapacitorBarcodeScannerPlugin",
-		"CAPCameraPlugin",
 		"GeolocationPlugin",
 		"SplashScreenPlugin"
 	]

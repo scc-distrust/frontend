@@ -1,23 +1,33 @@
 <script lang="ts">
-  import Role from "../components/Role.svelte";
   import Title from "../components/Title.svelte";
   import Subtitle from "../components/Subtitle.svelte";
   import UserCard from "../components/UserCard.svelte";
   import Button from "../components/Button.svelte";
+  import { players } from "../lib/backend";
+  import { debugging, isHost } from "../lib/user";
+  import { createEventDispatcher } from "svelte";
+
+  const dispatcher = createEventDispatcher<{ start: void }>();
+
+  const handleStart = () => {
+    dispatcher("start");
+  };
 </script>
 
 <div class="main-content">
   <Title size="3rem" />
   <Subtitle size="1.76rem" subtitle="Waiting room" />
   <div class="user-list">
-    <UserCard username="Devanshu" color="blue" />
-    <UserCard username="Santio" color="red" />
-    <UserCard username="Dave" color="yellow" />
-    <UserCard username="Dave" color="purple" />
+    {#each $players as player}
+      <UserCard {player} />
+    {/each}
   </div>
-  <div class="button-container">
-    <Button text="Start to play" type="primary" />
-  </div>
+
+  {#if ($isHost && $players.length >= 2) || $debugging}
+    <div class="button-container">
+      <Button text="Start Game" type="primary" on:click={handleStart} />
+    </div>
+  {/if}
 </div>
 
 <style>

@@ -1,16 +1,14 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
   import { cardClicked } from "../store/ui";
-  import type { Color } from "../lib/user";
 
   import Icon from "./Icon.svelte";
   import { get } from "svelte/store";
+  import { type Player } from "../lib/backend";
 
-  export let username: string = "Username";
-  export let image: string =
-    "https://cdn.vectorstock.com/i/preview-2x/31/01/pixel-art-character-vector-28943101.webp";
-  export let color: Color;
+  export let player: Player;
   export let voted: boolean = false;
+  export let editable: boolean = false;
 
   let clicked: boolean = false;
   const dispatch = createEventDispatcher();
@@ -20,7 +18,7 @@
     if (!voted) {
       voted = true;
       // You can add your logic here to handle the vote
-      console.log(`Voted ${isRight ? "right" : "wrong"} for ${username}`);
+      console.log(`Voted ${isRight ? "right" : "wrong"} for ${player.name}`);
     }
   }
 
@@ -32,6 +30,8 @@
   }
 
   function handleClick() {
+    if (!editable) return;
+
     const isCurrentlyClicked = clicked;
     unclickAll();
 
@@ -49,18 +49,22 @@
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
   class="user-card"
-  style="border-left-color: var(--{color}-border); --bg: var(--{color}-bg);"
+  style="border-left-color: var(--{player.color}-border); --bg: var(--{player.color}-bg);"
   on:click={handleClick}
 >
   <div class="background"></div>
-  {#if image}
-    <img src={image} alt={username} class="character-image" />
+  {#if player.profile_picture}
+    <img
+      src="https://api.dicebear.com/9.x/pixel-art/svg?seed={player.profile_picture}"
+      alt={player.name}
+      class="character-image"
+    />
   {:else}
     <div class="user-image placeholder">No Image</div>
   {/if}
 
   <p class="username">
-    {username}
+    {player.name}
   </p>
 
   {#if voted}
@@ -123,6 +127,7 @@
     margin-left: 1%;
     width: 50px;
     height: 50px;
+    padding: 0.25rem;
     mix-blend-mode: multiply;
   }
 

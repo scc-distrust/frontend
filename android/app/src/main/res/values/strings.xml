@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Distrust</string>
+    <string name="title_activity_main">Distrust</string>
+    <string name="package_name">com.github.distrust</string>
+    <string name="custom_url_scheme">com.github.distrust</string>
+</resources>

@@ -19,12 +19,23 @@
   --red-border: rgba(238, 61, 100, 0.59);
   --blue-border: rgba(34, 96, 255, 0.59);
   --yellow-border: rgba(239, 198, 42, 0.59);
+  --black-border: rgba(0, 0, 0, 0.59);
+  --green-border: rgba(76, 175, 80, 0.59);
+  --white-border: rgba(222, 222, 222, 0.59);
+  --cyan-border: rgba(111, 255, 255, 0.59);
+  --orange-border: rgba(255, 152, 0, 0.59);
+  --pink-border: rgba(255, 0, 127, 0.59);
 
   --purple-bg: rgb(244, 224, 255);
   --red-bg: rgb(255, 218, 226);
   --blue-bg: rgb(208, 221, 255);
   --yellow-bg: rgb(255, 248, 220);
   --green-bg: rgb(204, 255, 204);
+  --white-bg: rgb(222, 222, 222);
+  --black-bg: rgb(0, 0, 0);
+  --cyan-bg: rgb(200, 255, 255);
+  --orange-bg: rgb(255, 235, 204);
+  --pink-bg: rgb(255, 204, 255);
 }
 
 html,

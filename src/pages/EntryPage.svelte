@@ -1,11 +1,14 @@
 <script lang="ts">
   import Title from "../components/Title.svelte";
-  import Role from "../components/Role.svelte";
+  import RoleComponent from "../components/RoleComponent.svelte";
+  import { type Role } from "../lib/backend";
+
+  export let role: Role | "Eliminated";
 </script>
 
 <div class="main-container">
   <Title size="3rem" />
-  <Role role="worker" />
+  <RoleComponent {role} />
 </div>
 
 <style>

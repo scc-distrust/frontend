@@ -1,23 +1,29 @@
 <script lang="ts">
-  import Role from "../components/Role.svelte";
   import Title from "../components/Title.svelte";
   import Subtitle from "../components/Subtitle.svelte";
   import Button from "../components/Button.svelte";
   import Task from "../components/Task.svelte";
   import ReportCard from "../components/ReportCard.svelte";
+  import { type Role } from "../lib/backend";
+  import { self } from "../lib/user";
 
-  let imposter: boolean = true;
+  export let role: Role | "Eliminated";
 </script>
 
 <div class="main-content">
   <Title size="3rem" />
   <Subtitle size="1.76rem" subtitle="Tasks" />
   <div class="tasks-list">
-    <Task size="1.6rem" task="Swipe Card" />
-    <Task size="1.6rem" task="Inspect Sample" />
-    <Task size="1.6rem" task="Fix Wiring" />
+    {#if role === "Traitor"}
+      <Task size="1.6rem" task="Eliminate Workers" />
+      <Task size="1.6rem" task="Act Innocent" />
+    {:else}
+      {#each $self.tasks as [task, count]}
+        <Task size="1.6rem" task="{task} x{count}" />
+      {/each}
+    {/if}
   </div>
-  {#if imposter}
+  {#if role == "Traitor"}
     <Subtitle size="1.76rem" subtitle="Kill Nearby" />
     <div class="nearby-list">
       <ReportCard reportname="Devanshu" color="purple" />

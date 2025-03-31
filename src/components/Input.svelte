@@ -4,7 +4,10 @@
 </script>
 
 <div class="input-container">
-  <label for={id}><slot /></label>
+  {#if value.trim() === ""}
+    <label for={id}><slot /></label>
+  {/if}
+
   <input {id} type="text" bind:value />
 </div>
 
@@ -20,6 +23,11 @@
 
   .input-container > * {
     position: absolute;
+  }
+
+  .input-container:has(input[value=""]) > label,
+  .input-container:has(input:focus) > label {
+    display: none;
   }
 
   input {
@@ -42,5 +50,6 @@
     color: #676767;
     padding: 0.75rem 1rem;
     z-index: 2;
+    user-select: none;
   }
 </style>

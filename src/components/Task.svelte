@@ -1,6 +1,6 @@
 <script lang="ts">
   export let size: string = "0.5em";
-  export let task: string = "Task Name";
+  export let task: string;
 </script>
 
 <div class="task">
@@ -27,6 +27,5 @@
     font-weight: bold;
     position: absolute;
     left: -1.5rem;
-    
   }
 </style>

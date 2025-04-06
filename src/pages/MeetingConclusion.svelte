@@ -60,7 +60,7 @@
 				<div in:fade={{ duration: 300, delay: 1e3 }}>
 					{#if results.traitors === 1}
 						There is <span class="traitor-count">{results.traitors}</span>
-						 traitor remaining
+						traitor remaining
 					{:else}
 						There are <span class="traitor-count">{results.traitors}</span>
 						traitors remaining

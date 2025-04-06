@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { debugging, role, self } from './../lib/user';
 	import { createEventDispatcher } from 'svelte';
 	import { cardClicked } from '../store/ui';
 
@@ -68,7 +69,11 @@
 		<div class="user-image placeholder">No Image</div>
 	{/if}
 
-	<p class="username">
+	<p
+		class="username"
+		class:traitor={player.role === 'Traitor' &&
+			($self.role === 'Traitor' || $debugging)}
+	>
 		{player.name}
 	</p>
 
@@ -157,6 +162,10 @@
 		color: var(--font-color);
 		margin: 0%;
 		user-select: none;
+	}
+
+	.traitor {
+		color: var(--red);
 	}
 
 	.thumbs-up,

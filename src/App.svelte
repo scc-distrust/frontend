@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { get } from 'svelte/store';
+	import VictoryPage from './pages/VictoryPage.svelte';
 	import MeetingConclusion from './pages/MeetingConclusion.svelte';
 	import MeetingRoom from './pages/MeetingRoom.svelte';
 	import Wires from './tasks/wires/Wires.svelte';
@@ -11,11 +13,12 @@
 	import * as backend from './lib/backend';
 	import * as capacitor from './lib/capacitor';
 
-	import { role, selfId } from './lib/user';
-	import { get } from 'svelte/store';
+	import { role, self, selfId } from './lib/user';
 	import { onDestroy, onMount } from 'svelte';
+	import type { Role } from './lib/backend.ts';
 	import MeetingCalled from './pages/MeetingCalled.svelte';
 	import type { MeetingData, MeetingResults } from './lib/backend';
+	import LostPage from './pages/LostPage.svelte';
 
 	let page = 'login';
 	let error: string | null = null;
@@ -31,6 +34,19 @@
 		error = null;
 		page = newPage;
 	};
+
+	const delay = (ms: number) =>
+		new Promise((resolve) => setTimeout(resolve, ms));
+
+	const delayUntil = (predicate: () => boolean) =>
+		new Promise((resolve) => {
+			const interval = setInterval(() => {
+				if (predicate()) {
+					clearInterval(interval);
+					resolve(null);
+				}
+			}, 50);
+		});
 
 	const handleLogin = (
 		event: CustomEvent<{
@@ -83,6 +99,32 @@
 					goto('main');
 				}, 8e3);
 			});
+
+			backend.connection().on('win_game', async (winner: Role) => {
+				if (page !== 'main') {
+					await delayUntil(() => {
+						return page === 'main';
+					});
+				}
+
+				if (get(self).role === winner) {
+					goto('won');
+				} else {
+					goto('lost');
+				}
+
+				setTimeout(() => {
+					backend.players.update((players) => {
+						return players.map((p) => {
+							p.state = 'Waiting';
+							p.role = 'Worker';
+							return p;
+						});
+					});
+
+					goto('waiting');
+				}, 10e3);
+			});
 		});
 	};
 
@@ -105,6 +147,10 @@
 	<MeetingRoom data={meetingData!} />
 {:else if page === 'meeting-results'}
 	<MeetingConclusion results={meetingResults!} />
+{:else if page === 'lost'}
+	<LostPage />
+{:else if page === 'won'}
+	<VictoryPage />
 {:else if page === ''}{:else if page === 'task'}
 	<TaskPage>
 		<Wires />

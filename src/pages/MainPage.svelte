@@ -7,6 +7,7 @@
 	import { type Player, type Role } from '../lib/backend';
 	import { calledMeeting, debugging, self } from '../lib/user';
 	import * as backend from '../lib/backend';
+	import { get } from 'svelte/store';
 
 	export let role: Role | 'Eliminated';
 	let nearby: Player[] = [];

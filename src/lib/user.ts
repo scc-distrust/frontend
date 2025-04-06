@@ -17,3 +17,4 @@ export const self = writable<Player | null>(null);
 export const selfId = writable<string>(randomSeed(24));
 export const profilePicture = writable<string>(randomSeed());
 export const role = writable<Role>("Worker");
+export const calledMeeting = writable<boolean>(false);

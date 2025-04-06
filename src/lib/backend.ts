@@ -15,13 +15,25 @@ export const Tasks = ['Switches', 'Wires', 'Calibrate Distribution'] as const;
 export type Task = typeof Tasks[number];
 
 export interface Player {
-	name: string;
-	device_id: string;
-	profile_picture: string;
-	color: Color;
-	role: Role;
-	state: State;
-	tasks: Map<Task, number>;
+    name: string;
+    device_id: string;
+    profile_picture: string;
+    color: Color;
+    role: Role;
+    state: State;
+    tasks: Map<Task, number>;
+}
+
+export interface MeetingData {
+    player: Player,
+    started: number,
+    length: number
+}
+
+export interface MeetingResults {
+    skip: boolean,
+    topVoted: Color,
+    traitors: number
 }
 
 export const players = writable<Player[]>([]);
@@ -132,4 +144,16 @@ export const login = (
 
 export const start = () => {
     connection().emit("start_game");
+}
+
+export const callMeeting = () => {
+    connection().emit("call_meeting");
+}
+
+export const vote = (color: Color) => {
+    connection().emit("vote", color);
+}
+
+export const skipVote = () => {
+    connection().emit("skip_vote");
 }

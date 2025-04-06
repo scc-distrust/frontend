@@ -1,13 +1,45 @@
 <script lang="ts">
+	import { onDestroy, onMount } from 'svelte';
 	import type { ButtonStyle } from '../lib/buttons';
+	import { debugging } from '../lib/user';
 
 	export let text: string;
 	export let fullWidth: boolean = true;
 	export let type: ButtonStyle = 'primary';
+	export let disabled: boolean = false;
+	export let countdown: number | null = null;
+
+	let timer: NodeJS.Timeout | null = null;
+
+	onMount(() => {
+		if (disabled) countdown = null;
+		if (!countdown) return;
+
+		timer = setInterval(() => {
+			countdown--;
+			if (countdown === 0) {
+				clearInterval(timer!);
+				timer = null;
+			}
+		}, 1000);
+	});
+
+	onDestroy(() => {
+		if (timer !== null) {
+			clearInterval(timer);
+		}
+	});
 </script>
 
-<button on:click class={`${type} ${fullWidth ? 'fullWidth' : ''}`}>
+<button
+	on:click
+	class:disabled={disabled || (!!countdown && !$debugging)}
+	class={`${type} ${fullWidth ? 'fullWidth' : ''}`}
+>
 	{text}
+	{#if !!countdown}
+		{' '}({countdown}s)
+	{/if}
 </button>
 
 <style>
@@ -23,7 +55,6 @@
 		transition: all 0.2s ease-in-out;
 		font-family: 'Ubuntu Mono', serif;
 		font-size: 1.2rem;
-		/* max-width: 50%; */
 	}
 
 	button:hover {
@@ -51,5 +82,23 @@
 		width: 100%;
 		width: -moz-available;
 		width: -webkit-fill-available;
+	}
+
+	button.disabled::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0, 0, 0, 0.5);
+		z-index: 1;
+		cursor: not-allowed;
+	}
+
+	button.disabled {
+		position: relative;
+		pointer-events: none;
+		cursor: not-allowed;
 	}
 </style>

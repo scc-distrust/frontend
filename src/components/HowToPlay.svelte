@@ -1,9 +1,11 @@
-<script>
+<script lang="ts">
   import Title from "./Title.svelte";
   import Subtitle from "./Subtitle.svelte";
+
+  let content: HTMLDivElement;
 </script>
 
-<div class="main-content">
+<div class="main-content" bind:this={content}>
   <div class="holder">
     <hr />
   </div>

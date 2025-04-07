@@ -2,6 +2,7 @@ import { io, Socket } from "socket.io-client";
 import { get, writable } from "svelte/store";
 import { isHost, randomSeed, self, selfId } from "./user";
 import { Position } from "@capacitor/geolocation";
+import { lastLocation } from "./capacitor";
 
 export const Colors = ['red', 'orange', 'yellow', 'green', 'blue', 'cyan', 'purple', 'pink', 'white', 'black'] as const;
 export type Color = typeof Colors[number];
@@ -172,6 +173,10 @@ export const connect = (url: string): Promise<string | null> => {
                 return match;
             }).filter(p => !!p) as Player[]);
             isBody.set(newBodies.includes(get(self)!.color));
+        });
+
+        store.on('new_location', (location: Position) => {
+            lastLocation.set(location);
         });
 
         store.onAny((event, ...data) => {

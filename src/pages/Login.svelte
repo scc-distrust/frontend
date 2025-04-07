@@ -7,7 +7,7 @@
 	import Input from '../components/Input.svelte';
 	import Title from '../components/Title.svelte';
 	import UserProfile from '../components/UserProfile.svelte';
-	import { debugging, profilePicture } from '../lib/user';
+	import { debugging, profilePicture, toggleDevPage } from '../lib/user';
 
 	export let error: string | null = null;
 
@@ -61,7 +61,7 @@
 <div class="main-container">
 	<Title size="6rem" />
 	<UserProfile editable={true} />
-	<form class="login-form" on:submit|preventDefault={login}>
+	<form on:submit|preventDefault={login}>
 		<Input id="username" bind:value={username}>
 			<Icon icon="user-circle" size={1.4} />
 			Username
@@ -77,6 +77,9 @@
 
 		<div class="button-container">
 			<Button text="Connect" type="primary" />
+			{#if $debugging}
+				<Button text="Developer Mode" type="warning" on:click={toggleDevPage} />
+			{/if}
 			<Button text="How to play" type="default" on:click={showHowToPlay} />
 		</div>
 	</form>
@@ -98,7 +101,7 @@
 		margin: auto;
 	}
 
-	.login-form {
+	form {
 		display: flex;
 		flex-direction: column;
 		margin: 2rem 1rem 1rem 1rem;
@@ -110,6 +113,7 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
+		padding-top: 5rem;
 		margin-top: auto;
 		margin-bottom: 2rem;
 	}

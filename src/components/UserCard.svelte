@@ -107,7 +107,6 @@
 		display: flex;
 		flex-direction: row;
 		align-items: center;
-		/* gap: px; */
 		border-radius: 10px;
 		background-color: #fff;
 		width: auto;
@@ -172,6 +171,11 @@
 	.speaker {
 		padding-left: 0.5rem;
 		font-size: 1.75rem;
+	}
+
+	.speaker {
+		padding: 0.5rem;
+		padding-top: 0.75rem;
 	}
 
 	.vote-buttons {

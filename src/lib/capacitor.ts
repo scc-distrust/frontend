@@ -1,8 +1,10 @@
-import { CallbackID, Geolocation } from "@capacitor/geolocation"
+import { CallbackID, Geolocation, Position } from "@capacitor/geolocation"
+import { CapacitorBarcodeScanner, CapacitorBarcodeScannerCameraDirection, CapacitorBarcodeScannerTypeHint } from '@capacitor/barcode-scanner'
 import { get, writable } from "svelte/store";
 import * as backend from "./backend";
 
 export const watchID = writable<CallbackID | null>(null);
+export const lastLocation = writable<Position | null>(null);
 
 export const requestPermissions = async (): Promise<boolean> => {
     try {
@@ -30,8 +32,11 @@ export const startWatching = async () => {
         timeout: 1000,
         maximumAge: 2000
     }, (position) => {
-        console.log(position);
-        // backend.sendLocation(position);
+        if (position !== null && get(backend.socket)?.connected) {
+            console.log(`[capacitor] Location changed to ${JSON.stringify(position)}`);
+            backend.sendLocation(position);
+            lastLocation.set(position);
+        }
     });
 
     watchID.set(id);
@@ -45,4 +50,13 @@ export const stopWatching = async () => {
     });
 
     watchID.set(null);
+}
+
+export const scanQr = async (): Promise<string> => {
+    const result = await CapacitorBarcodeScanner.scanBarcode({
+        cameraDirection: CapacitorBarcodeScannerCameraDirection.BACK,
+        hint: CapacitorBarcodeScannerTypeHint.QR_CODE
+    })
+
+    return result.ScanResult;
 }

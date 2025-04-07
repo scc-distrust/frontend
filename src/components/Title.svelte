@@ -17,7 +17,7 @@
 		font-size: var(--size);
 		text-align: center;
 		margin: 0;
-		margin-top: 5%;
+		padding-top: 5%;
 		z-index: 10;
 		user-select: none;
 		width: 100%;

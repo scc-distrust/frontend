@@ -2,5 +2,8 @@
   "appId": "com.github.distrust",
   "appName": "Distrust",
   "webDir": "dist",
-  "plugins": {}
+  "plugins": {},
+  "android": {
+    "allowMixedContent": true
+  }
 }

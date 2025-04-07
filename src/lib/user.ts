@@ -1,4 +1,4 @@
-import { writable } from "svelte/store";
+import { writable, get } from "svelte/store";
 import { Player, Role } from "./backend";
 
 const alphabet = "abcdefghijklmnopqrstuvwxyz";
@@ -18,3 +18,8 @@ export const selfId = writable<string>(randomSeed(24));
 export const profilePicture = writable<string>(randomSeed());
 export const role = writable<Role>("Worker");
 export const calledMeeting = writable<boolean>(false);
+export const devPage = writable<boolean>(false);
+
+export const toggleDevPage = () => {
+  devPage.set(!get(devPage));
+}

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Switches from './tasks/switches/Switches.svelte';
 	import { get } from 'svelte/store';
 	import VictoryPage from './pages/VictoryPage.svelte';
 	import MeetingConclusion from './pages/MeetingConclusion.svelte';
@@ -13,14 +14,17 @@
 	import * as backend from './lib/backend';
 	import * as capacitor from './lib/capacitor';
 
-	import { role, self, selfId } from './lib/user';
+	import { devPage, role, self, selfId } from './lib/user';
 	import { onDestroy, onMount } from 'svelte';
-	import type { Role } from './lib/backend.ts';
 	import MeetingCalled from './pages/MeetingCalled.svelte';
-	import type { MeetingData, MeetingResults } from './lib/backend';
+	import type { Role, MeetingData, MeetingResults } from './lib/backend';
+	import { isBody } from './lib/backend';
 	import LostPage from './pages/LostPage.svelte';
+	import DeveloperPage from './pages/DeveloperPage.svelte';
+	import BodyPage from './pages/BodyPage.svelte';
 
 	let page = 'login';
+	let task: string | null = null;
 	let error: string | null = null;
 
 	let meetingData: MeetingData | null = null;
@@ -69,6 +73,7 @@
 				return;
 			}
 
+			capacitor.startWatching();
 			backend.login(event.detail.username, get(selfId), event.detail.picture);
 
 			// Attach extra listeners
@@ -125,13 +130,34 @@
 					goto('waiting');
 				}, 10e3);
 			});
+
+			backend.connection().on('start_task', (completionTask: string) => {
+				task = completionTask;
+				goto('task');
+			});
 		});
 	};
 
 	const handleStart = () => {
 		backend.start();
 	};
+
+	const completeTask = () => {
+		backend.completeTask();
+
+		setTimeout(() => {
+			goto('main');
+		}, 1e3);
+	};
+
+	onDestroy(() => {
+		capacitor.stopWatching();
+	});
 </script>
+
+{#if $devPage}
+	<DeveloperPage />
+{/if}
 
 {#if page === 'login'}
 	<Login on:login={handleLogin} {error} />
@@ -139,8 +165,10 @@
 	<Waiting on:start={handleStart} />
 {:else if page === 'role'}
 	<EntryPage role={$role} />
+{:else if $isBody}
+	<BodyPage />
 {:else if page === 'main'}
-	<MainPage role={$role} />
+	<MainPage />
 {:else if page === 'meeting-splash'}
 	<MeetingCalled />
 {:else if page === 'meeting'}
@@ -151,8 +179,14 @@
 	<LostPage />
 {:else if page === 'won'}
 	<VictoryPage />
-{:else if page === ''}{:else if page === 'task'}
-	<TaskPage>
-		<Wires />
+{:else if page === 'task'}
+	<TaskPage on:giveUp={() => goto('main')}>
+		{#if task === 'wires'}
+			<Wires on:completed={completeTask} />
+		{:else if task === 'calibration'}
+			<!-- <Calibration /> -->
+		{:else if task === 'switches'}
+			<Switches on:completed={completeTask} />
+		{/if}
 	</TaskPage>
 {/if}

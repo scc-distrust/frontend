@@ -1,1 +1,1 @@
-export type ButtonStyle = "primary" | "danger" | "default";
+export type ButtonStyle = "primary" | "danger" | "default" | 'warning';

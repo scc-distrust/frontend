@@ -10,7 +10,7 @@
 	} from '../lib/backend';
 	import UserCard from '../components/UserCard.svelte';
 	import { onDestroy, onMount } from 'svelte';
-	import { self } from '../lib/user';
+	import { debugging, self, toggleDevPage } from '../lib/user';
 	import * as backend from '../lib/backend';
 
 	export let data: MeetingData;
@@ -89,6 +89,9 @@
 			type="default"
 			disabled={voted}
 		/>
+		{#if $debugging}
+			<Button text="Developer Mode" type="warning" on:click={toggleDevPage} />
+		{/if}
 	</div>
 </div>
 

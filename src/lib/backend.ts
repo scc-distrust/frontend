@@ -1,6 +1,7 @@
 import { io, Socket } from "socket.io-client";
 import { get, writable } from "svelte/store";
-import { isHost, self, selfId } from "./user";
+import { isHost, randomSeed, self, selfId } from "./user";
+import { Position } from "@capacitor/geolocation";
 
 export const Colors = ['red', 'orange', 'yellow', 'green', 'blue', 'cyan', 'purple', 'pink', 'white', 'black'] as const;
 export type Color = typeof Colors[number];
@@ -36,8 +37,22 @@ export interface MeetingResults {
     traitors: number
 }
 
+export interface Nearby {
+    color: Color;
+    distance: number;
+    coords: {
+        latitude: number,
+        longitude: number,
+    }
+}
+
 export const players = writable<Player[]>([]);
+export const playersNearby = writable<Player[]>([]);
+export const nearbyRaw = writable<Nearby[]>([]);
 export const socket = writable<Socket | null>(null);
+
+export const bodies = writable<Player[]>([]);
+export const isBody = writable<boolean>(false);
 
 export const connection = () => {
     const current = get(socket);
@@ -96,6 +111,22 @@ export const connect = (url: string): Promise<string | null> => {
                 players.splice(index, 1);
                 return players;
             });
+
+            playersNearby.update(players => {
+                const index = players.findIndex(p => p.color === player.color);
+                if (index === -1) return players;
+
+                players.splice(index, 1);
+                return players;
+            });
+
+            bodies.update(bodies => {
+                const index = bodies.findIndex(p => p.color === player.color);
+                if (index === -1) return bodies;
+
+                bodies.splice(index, 1);
+                return bodies;
+            });
         });
 
         store.on('players', (currentPlayers: Player[]) => {
@@ -113,8 +144,34 @@ export const connect = (url: string): Promise<string | null> => {
             }
         });
 
+        store.on('nearby', (nearby: Nearby[]) => {
+            nearbyRaw.set(nearby);
+            playersNearby.set(nearby.map((data) => {
+                const match = get(players).find(p => p.color === data.color);
+                if (match === undefined) {
+                    console.log(`[backend] Nearby player ${data.color} not found`);
+                    return null;
+                }
+
+                return match;
+            }).filter(p => !!p) as Player[]);
+        });
+
         store.on("error", (err) => {
             console.error("[backend] error", err);
+        });
+
+        store.on('bodies', (newBodies: Color[]) => {
+            bodies.set(newBodies.map((color) => {
+                const match = get(players).find(p => p.color === color);
+                if (match === undefined) {
+                    console.log(`[backend] Body for color ${color} not found`);
+                    return null;
+                }
+
+                return match;
+            }).filter(p => !!p) as Player[]);
+            isBody.set(newBodies.includes(get(self)!.color));
         });
 
         store.onAny((event, ...data) => {
@@ -156,4 +213,41 @@ export const vote = (color: Color) => {
 
 export const skipVote = () => {
     connection().emit("skip_vote");
+}
+
+export const sendLocation = (position: Position) => {
+    connection().emit("location", position);
+}
+
+export const scanQr = (result: string) => {
+    let data = result.split('-');
+    if (data.length === 3 && data[0] === 'distrust' && data[1] === 'task') {
+        result += '-' + randomSeed(12);
+    }
+
+    connection().emit("scan_qr", result);
+}
+
+export const completeTask = () => {
+    connection().emit("complete_task");
+}
+
+export function changeRole(): void {
+    connection().emit("change_role");
+}
+
+export function eliminate(color: Color): void {
+    connection().emit("eliminate", color);
+}
+
+export function bringHere(): void {
+    connection().emit("bring_here");
+}
+
+export const forceSkipMeeting = () => {
+    connection().emit("force_skip_meeting");
+}
+
+export const kick = (color: Color): void => {
+    connection().emit("kick", color);
 }

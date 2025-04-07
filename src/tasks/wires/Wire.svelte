@@ -14,8 +14,12 @@
 
 	const mouseDown = (_) => {
 		if (!interactive) return;
+
 		document.addEventListener('mousemove', mouseMove);
 		document.addEventListener('mouseup', mouseUp, { once: true });
+		document.addEventListener('touchmove', mouseMove);
+		document.addEventListener('touchend', mouseUp, { once: true });
+
 		connecting = true;
 		wire.style.display = 'block';
 		wire.style.left =
@@ -26,6 +30,7 @@
 
 	const mouseUp = (_) => {
 		document.removeEventListener('mousemove', mouseMove);
+		document.removeEventListener('touchmove', mouseMove);
 		connecting = false;
 		wire.style.display = 'none';
 	};
@@ -82,12 +87,23 @@
 		wire.style.transform = 'rotate(' + angle + 'deg)';
 	};
 
-	const mouseMove = (event: MouseEvent) => {
-		drawFromDiv(block, { x: event.clientX, y: event.clientY });
+	const mouseMove = (event: MouseEvent | TouchEvent) => {
+		let clientX: number;
+		let clientY: number;
+
+		if (event instanceof MouseEvent) {
+			clientX = event.clientX;
+			clientY = event.clientY;
+		} else {
+			clientX = event.touches[0].clientX;
+			clientY = event.touches[0].clientY;
+		}
+
+		drawFromDiv(block, { x: clientX, y: clientY });
 
 		// Check if the mouse is over another block with the same color
 		const over = document
-			.elementsFromPoint(event.clientX, event.clientY)
+			.elementsFromPoint(clientX, clientY)
 			.find((el) => el.classList.contains('block'));
 		if (over) {
 			if (over === block || !(over instanceof HTMLDivElement)) return;
@@ -99,6 +115,8 @@
 
 				document.removeEventListener('mousemove', mouseMove);
 				document.removeEventListener('mouseup', mouseUp);
+				document.removeEventListener('touchmove', mouseMove);
+				document.removeEventListener('touchend', mouseUp);
 
 				wire.style.display = 'block';
 				drawFromDivs(block, over);
@@ -112,6 +130,7 @@
 <div
 	class="block"
 	on:mousedown={mouseDown}
+	on:touchstart={mouseDown}
 	bind:this={block}
 	style="--color: {color}"
 ></div>

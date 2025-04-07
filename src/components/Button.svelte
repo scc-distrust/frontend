@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onDestroy, onMount } from 'svelte';
+	import { createEventDispatcher, onDestroy, onMount } from 'svelte';
 	import type { ButtonStyle } from '../lib/buttons';
 	import { debugging } from '../lib/user';
 
@@ -8,13 +8,13 @@
 	export let type: ButtonStyle = 'primary';
 	export let disabled: boolean = false;
 	export let countdown: number | null = null;
+	export let small: boolean = false;
 
+	const dispatcher = createEventDispatcher<{ click: void }>();
 	let timer: NodeJS.Timeout | null = null;
+	let originalCountdown: number | null = null;
 
-	onMount(() => {
-		if (disabled) countdown = null;
-		if (!countdown) return;
-
+	const startTimer = () => {
 		timer = setInterval(() => {
 			countdown--;
 			if (countdown === 0) {
@@ -22,6 +22,14 @@
 				timer = null;
 			}
 		}, 1000);
+	};
+
+	onMount(() => {
+		if (disabled) countdown = null;
+		if (!countdown) return;
+
+		originalCountdown = countdown;
+		startTimer();
 	});
 
 	onDestroy(() => {
@@ -29,10 +37,24 @@
 			clearInterval(timer);
 		}
 	});
+
+	const handleClick = () => {
+		if (disabled) return;
+
+		if (!countdown) {
+			dispatcher('click');
+
+			if (!!originalCountdown) {
+				countdown = originalCountdown;
+				startTimer();
+			}
+		}
+	};
 </script>
 
 <button
-	on:click
+	on:click={handleClick}
+	class:small
 	class:disabled={disabled || (!!countdown && !$debugging)}
 	class={`${type} ${fullWidth ? 'fullWidth' : ''}`}
 >
@@ -73,6 +95,10 @@
 		background-color: var(--red);
 	}
 
+	button.warning {
+		background-color: var(--orange);
+	}
+
 	button.default {
 		background-color: var(--gray);
 		color: #000000;
@@ -100,5 +126,10 @@
 		position: relative;
 		pointer-events: none;
 		cursor: not-allowed;
+	}
+
+	button.small {
+		font-size: 1rem;
+		padding: 0.5rem 1rem;
 	}
 </style>

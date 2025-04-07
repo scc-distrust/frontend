@@ -46,7 +46,7 @@
 		justify-content: center;
 		height: 70vh;
 		width: 100%;
-		margin: auto;
+		text-align: center;
 	}
 
 	.title {

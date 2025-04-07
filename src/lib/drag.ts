@@ -1,5 +1,5 @@
 class DraggableElement {
-    private event: (event: MouseEvent) => void;
+    private event: (event: MouseEvent | TouchEvent) => void;
 
     private elementOffset: number[] = [0, 0];
     private baseOffset: number[] = [0, 0];
@@ -22,11 +22,22 @@ class DraggableElement {
     ) {
         this.elementOffset = [element.offsetLeft, element.offsetTop];
 
-        this.event = (event: MouseEvent) => {
+        this.event = (event: MouseEvent | TouchEvent) => {
             if (!this.isDragging) return;
 
-            let elementX = event.pageX - this.baseOffset[0];
-            let elementY = event.pageY - this.baseOffset[1];
+            let pageX: number = 0;
+            let pageY: number = 0;
+
+            if (event instanceof TouchEvent) {
+                pageX = event.touches[0].pageX;
+                pageY = event.touches[0].pageY;
+            } else {
+                pageX = event.pageX;
+                pageY = event.pageY;
+            }
+
+            let elementX = pageX - this.baseOffset[0];
+            let elementY = pageY - this.baseOffset[1];
 
             for (const constraint of this.constraints) {
                 const rect = constraint.element.getBoundingClientRect();
@@ -45,8 +56,8 @@ class DraggableElement {
 
             callback({
                 mouse: {
-                    x: event.pageX,
-                    y: event.pageY,
+                    x: pageX,
+                    y: pageY,
                 },
                 element: {
                     x,
@@ -60,9 +71,19 @@ class DraggableElement {
             document.addEventListener('mousemove', this.event);
         });
 
+        this.register(element, 'touchstart', (_) => {
+            this.isDragging = true;
+            document.addEventListener('touchmove', this.event);
+        });
+
         this.register(element, 'mouseup', () => {
             if (!this.isDragging) return;
             document.removeEventListener('mousemove', this.event);
+        });
+
+        this.register(element, 'touchend', () => {
+            if (!this.isDragging) return;
+            document.removeEventListener('touchmove', this.event);
         });
 
         this.register(document, 'selectstart', (event: Event) => {

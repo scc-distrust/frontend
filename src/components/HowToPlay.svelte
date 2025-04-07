@@ -1,11 +1,36 @@
 <script lang="ts">
   import Title from "./Title.svelte";
   import Subtitle from "./Subtitle.svelte";
+  import { createEventDispatcher, mount, onMount } from "svelte";
+  import * as drag from "../lib/drag";
 
+  const dispatcher = createEventDispatcher<{ exit: void }>();
   let content: HTMLDivElement;
+  let y: number = 0;
+
+  onMount(() => {
+    let startY: number = 0;
+    const draggable = drag
+      .mount(content, (event) => {
+        if (startY === -1) {
+          startY = event.element.y;
+        }
+
+        if (event.mouse.y >= document.body.clientHeight - 100) {
+          dispatcher("exit");
+          draggable.cancel();
+        }
+
+        y = event.element.y - startY;
+        if (y < 0) y = 0;
+      })
+      .letGo(() => {
+        y = 0;
+      });
+  });
 </script>
 
-<div class="main-content" bind:this={content}>
+<div class="main-content" bind:this={content} style="--y: {y}px">
   <div class="holder">
     <hr />
   </div>
@@ -52,6 +77,8 @@
     position: absolute;
     bottom: 0;
     z-index: 100;
+    transform: translateY(var(--y));
+    border-radius: 30px 30px 0 0;
   }
 
   .holder {

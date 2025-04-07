@@ -7,6 +7,8 @@ class DraggableElement {
     private constraints: Constraint[] = [];
     private events: RegisteredListener<any>[] = [];
 
+    private letGoListeners: (() => void)[] = [];
+
     private register<K extends keyof HTMLElementEventMap>(
         element: Node,
         event: K,
@@ -78,11 +80,13 @@ class DraggableElement {
 
         this.register(element, 'mouseup', () => {
             if (!this.isDragging) return;
+            this.letGoListeners.forEach(l => l());
             document.removeEventListener('mousemove', this.event);
         });
 
         this.register(element, 'touchend', () => {
             if (!this.isDragging) return;
+            this.letGoListeners.forEach(l => l());
             document.removeEventListener('touchmove', this.event);
         });
 
@@ -116,6 +120,11 @@ class DraggableElement {
             event.element.removeEventListener(event.event, event.handler);
         }
 
+        return this;
+    }
+
+    letGo(callback: () => void): DraggableElement {
+        this.letGoListeners.push(callback);
         return this;
     }
 

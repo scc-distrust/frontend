@@ -5,6 +5,7 @@ import * as backend from "./backend";
 
 export const watchID = writable<CallbackID | null>(null);
 export const lastLocation = writable<Position | null>(null);
+export const lastUpdate = writable<number>(0);
 
 export const requestPermissions = async (): Promise<boolean> => {
     try {
@@ -34,6 +35,13 @@ export const startWatching = async () => {
     }, (position) => {
         if (position !== null && get(backend.socket)?.connected) {
             console.log(`[capacitor] Location changed to ${JSON.stringify(position)}`);
+            
+            if (position.coords.accuracy <= 12.5 && get(lastUpdate) > Date.now() - 10e3) {
+                console.log(`[capacitor] Location accuracy is low, ignoring, accuracy: ${position.coords.accuracy}`);
+                return;
+            }
+
+            lastUpdate.set(Date.now());
             backend.sendLocation(position);
             lastLocation.set(position);
         }

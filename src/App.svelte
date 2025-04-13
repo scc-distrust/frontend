@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Calibrate from './tasks/calibrate/Calibrate.svelte';
 	import Switches from './tasks/switches/Switches.svelte';
 	import { get } from 'svelte/store';
 	import VictoryPage from './pages/VictoryPage.svelte';
@@ -22,6 +23,14 @@
 	import LostPage from './pages/LostPage.svelte';
 	import DeveloperPage from './pages/DeveloperPage.svelte';
 	import BodyPage from './pages/BodyPage.svelte';
+
+	const taskDescriptions = {
+		wires:
+			'Connect the wire boxes to their matching colour on both sides to complete this task.',
+		calibrate:
+			'Going from top to bottom, when the rotation lines up with the right connector (and the connector lights up), press the button on the right to lock it. Lock all 3 distributors to complete this task.',
+		switches: 'Move each handle to the outlined box to complete this task.'
+	};
 
 	let page = 'login';
 	let task: string | null = null;
@@ -180,11 +189,14 @@
 {:else if page === 'won'}
 	<VictoryPage />
 {:else if page === 'task'}
-	<TaskPage on:giveUp={() => goto('main')}>
+	<TaskPage
+		on:giveUp={() => goto('main')}
+		description={taskDescriptions[task] ?? ''}
+	>
 		{#if task === 'wires'}
 			<Wires on:completed={completeTask} />
 		{:else if task === 'calibration'}
-			<!-- <Calibration /> -->
+			<Calibrate on:completed={completeTask} />
 		{:else if task === 'switches'}
 			<Switches on:completed={completeTask} />
 		{/if}

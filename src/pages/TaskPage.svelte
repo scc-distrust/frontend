@@ -61,13 +61,13 @@
 
 	p {
 		font-family: 'Ubuntu Mono', 'serif';
-		font-size: 2em;
+		font-size: 1.5em;
 		letter-spacing: 0.1em;
 		word-spacing: 0.3em;
 	}
 
 	.giveup {
-		position: absolute;
+		position: fixed;
 		bottom: 1rem;
 		width: 100%;
 		padding: 0 5rem;

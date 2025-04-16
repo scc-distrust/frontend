@@ -15,7 +15,7 @@
 	import * as backend from './lib/backend';
 	import * as capacitor from './lib/capacitor';
 
-	import { devPage, role, self, selfId } from './lib/user';
+	import { calledMeeting, devPage, role, self, selfId } from './lib/user';
 	import { onDestroy, onMount } from 'svelte';
 	import MeetingCalled from './pages/MeetingCalled.svelte';
 	import type { Role, MeetingData, MeetingResults } from './lib/backend';
@@ -117,7 +117,7 @@
 			backend.connection().on('win_game', async (winner: Role) => {
 				if (page !== 'main') {
 					await delayUntil(() => {
-						return page === 'main';
+						return page !== 'meeting-results' && page !== 'meeting';
 					});
 				}
 
@@ -128,6 +128,8 @@
 				}
 
 				setTimeout(() => {
+					calledMeeting.set(false);
+					isBody.set(false);
 					backend.players.update((players) => {
 						return players.map((p) => {
 							p.state = 'Waiting';
@@ -174,6 +176,10 @@
 	<Waiting on:start={handleStart} />
 {:else if page === 'role'}
 	<EntryPage role={$role} />
+{:else if page === 'lost'}
+	<LostPage />
+{:else if page === 'won'}
+	<VictoryPage />
 {:else if $isBody}
 	<BodyPage />
 {:else if page === 'main'}
@@ -184,10 +190,6 @@
 	<MeetingRoom data={meetingData!} />
 {:else if page === 'meeting-results'}
 	<MeetingConclusion results={meetingResults!} />
-{:else if page === 'lost'}
-	<LostPage />
-{:else if page === 'won'}
-	<VictoryPage />
 {:else if page === 'task'}
 	<TaskPage
 		on:giveUp={() => goto('main')}

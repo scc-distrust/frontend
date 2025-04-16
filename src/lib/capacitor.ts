@@ -35,7 +35,7 @@ export const startWatching = async () => {
     }, (position) => {
         if (position !== null && get(backend.socket)?.connected) {
             console.log(`[capacitor] Location changed to ${JSON.stringify(position)}`);
-            
+
             if (position.coords.accuracy <= 12.5 && get(lastUpdate) > Date.now() - 10e3) {
                 console.log(`[capacitor] Location accuracy is low, ignoring, accuracy: ${position.coords.accuracy}`);
                 return;
@@ -67,4 +67,22 @@ export const scanQr = async (): Promise<string> => {
     })
 
     return result.ScanResult;
+}
+
+export const fakeLocation = async (lat: number, lng: number) => {
+    const position: Position = {
+        coords: {
+            latitude: lat,
+            longitude: lng,
+            altitude: 100,
+            accuracy: 100,
+            altitudeAccuracy: 100,
+            heading: 0,
+            speed: 0
+        },
+        timestamp: Date.now()
+    }
+
+    lastLocation.set(position);
+    backend.sendLocation(position);
 }

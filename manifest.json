@@ -1,11 +1,11 @@
 {
-  "name": "App",
-  "short_name": "App",
+  "name": "Distrust",
+  "short_name": "distrust",
   "start_url": "index.html",
   "display": "standalone",
   "icons": [
     {
-      "src": "src/assets/imgs/logo.png",
+      "src": "assets/logo.png",
       "sizes": "512x512",
       "type": "image/png"
     }

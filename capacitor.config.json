@@ -2,9 +2,8 @@
   "appId": "com.github.distrust",
   "appName": "Distrust",
   "webDir": "dist",
-  "plugins": {
-    "SplashScreen": {
-      "launchAutoHide": false
-    }
+  "plugins": {},
+  "android": {
+    "allowMixedContent": true
   }
 }

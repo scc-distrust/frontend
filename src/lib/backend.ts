@@ -156,6 +156,7 @@ export const connect = (url: string): Promise<string | null> => {
 
                 return match;
             }).filter(p => !!p) as Player[]);
+            console.log(`[backend] Nearby players: ${nearby.length}`);
         });
 
         store.on("error", (err) => {

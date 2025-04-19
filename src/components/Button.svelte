@@ -2,6 +2,7 @@
 	import { createEventDispatcher, onDestroy, onMount } from 'svelte';
 	import type { ButtonStyle } from '../lib/buttons';
 	import { debugging } from '../lib/user';
+	import { get } from 'svelte/store';
 
 	export let text: string;
 	export let fullWidth: boolean = true;
@@ -41,7 +42,7 @@
 	const handleClick = () => {
 		if (disabled) return;
 
-		if (!countdown) {
+		if (!countdown || get(debugging)) {
 			dispatcher('click');
 
 			if (!!originalCountdown) {

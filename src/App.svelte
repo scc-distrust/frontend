@@ -16,7 +16,7 @@
 	import * as capacitor from './lib/capacitor';
 
 	import { calledMeeting, devPage, role, self, selfId } from './lib/user';
-	import { onDestroy, onMount } from 'svelte';
+	import { onDestroy } from 'svelte';
 	import MeetingCalled from './pages/MeetingCalled.svelte';
 	import type { Role, MeetingData, MeetingResults } from './lib/backend';
 	import { isBody } from './lib/backend';
@@ -130,6 +130,9 @@
 				setTimeout(() => {
 					calledMeeting.set(false);
 					isBody.set(false);
+					backend.bodies.set([]);
+					backend.playersNearby.set([]);
+					backend.nearbyRaw.set([]);
 					backend.players.update((players) => {
 						return players.map((p) => {
 							p.state = 'Waiting';

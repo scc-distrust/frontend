@@ -61,29 +61,28 @@ npm run start
 
 ## Promo Video
 Check out the gameplay in action:  
-[![Watch the Promo Video]([https://img.youtube.com/vi/YOUR_VIDEO_ID/0.jpg)](https://www.youtube.com/watch?v=YOUR_VIDEO_ID](https://youtu.be/ZatgoWPPdko))
-
-*(Replace with your actual video link)*
+[Watch the Promo Video](https://youtu.be/ZatgoWPPdko)
 
 ## Hi-Fi Mockups
 Here's a preview of the Distrust application design:
 
 ### Login Screen
-![Login Screen](path/to/login_screen.png)
+<img width="274" alt="Screenshot 2025-02-17 at 11 07 14 AM" src="https://github.com/user-attachments/assets/45b3b59c-6fc9-4a6e-8091-88467f7e21d7" />
 
 ### Waiting Room
-![Waiting Room](path/to/waiting_room.png)
+<img width="274" alt="Screenshot 2025-02-17 at 11 12 23 AM" src="https://github.com/user-attachments/assets/b08aa7cf-e043-46be-9c77-c480b46e6a9a" />
 
 ### Gameplay Screen (Worker)
-![Gameplay Worker](path/to/worker_screen.png)
+<img width="274" alt="Screenshot 2025-02-17 at 11 27 36 AM" src="https://github.com/user-attachments/assets/117f531e-4428-4fd9-9b64-963d425b54fa" />
 
 ### Gameplay Screen (Traitor)
-![Gameplay Traitor](path/to/traitor_screen.png)
+<img width="274" alt="Screenshot 2025-02-17 at 11 27 36 AM" src="https://github.com/user-attachments/assets/6114f728-d3fc-4bce-8cf5-7ac5a8027aa8" />
 
 ### Meeting Room
-![Meeting Room](path/to/meeting_room.png)
+<img width="274" alt="Screenshot 2025-02-17 at 11 30 06 AM" src="https://github.com/user-attachments/assets/6d2ccfd0-2076-45fe-897d-e5bfcddbb7e9" />
 
-*(Replace "path/to/" with actual image paths)*
+### Calibrate Distribution Task
+<img width="274" alt="Screenshot 2025-02-17 at 11 31 48 AM" src="https://github.com/user-attachments/assets/c1cd740d-afed-49de-9c31-3e42e9a4eb26" />
 
 ## License
 This project is for educational and non-commercial use. Please consult us for permission if you plan to build upon or commercialize this project.
